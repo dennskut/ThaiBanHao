@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thai Ban Hao | Autentisk Thairestaurang i Visby</title>
+  <meta name="description" content="Thai Ban Hao i Visby. Ät här, beställ avhämtning och njut av autentiska thaismaker i en varm miljö." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://maps.googleapis.com; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/js/site-config.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0B0B0B',
+            panel: '#111111',
+            accent: '#F4A261',
+            textMain: '#FFFFFF',
+            textSoft: '#E5E5E5'
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'serif'],
+            body: ['Manrope', 'sans-serif']
+          },
+          boxShadow: {
+            glow: '0 12px 40px rgba(244, 162, 97, 0.18)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --bg: #0B0B0B;
+      --panel: #111111;
+      --accent: #F4A261;
+      --text-main: #FFFFFF;
+      --text-soft: #E5E5E5;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 20% 10%, rgba(244, 162, 97, 0.11), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(244, 162, 97, 0.08), transparent 30%),
+        var(--bg);
+      color: var(--text-main);
+    }
+
+    .thai-border {
+      position: relative;
+    }
+
+    .thai-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 1rem;
+      padding: 1px;
+      background: linear-gradient(130deg, rgba(244, 162, 97, 0.75), rgba(244, 162, 97, 0.14));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.82)),
+        url('assets/images/hero-front.jpeg') center/cover no-repeat;
+    }
+  </style>
+</head>
+<body class="font-body text-textMain pb-20 md:pb-0">
+  <!-- Sticky Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <a href="#top" class="flex items-center gap-3">
+        <img src="assets/images/logo.png" alt="Thai Ban Hao logotyp" class="h-11 w-11 rounded-full border border-white/20 object-cover" />
+        <span class="font-heading text-2xl tracking-wide">Thai Ban Hao</span>
+      </a>
+
+      <button id="menu-toggle" class="md:hidden rounded-lg border border-white/20 px-3 py-2 text-sm" aria-label="Öppna meny">Meny</button>
+
+      <nav id="desktop-nav" class="hidden items-center gap-7 text-sm md:flex">
+        <a class="text-textSoft transition hover:text-accent" href="#menu">Meny</a>
+        <a class="text-textSoft transition hover:text-accent" href="#takeaway">Avhämtning</a>
+        <a class="text-textSoft transition hover:text-accent" href="#location">Kontakt</a>
+      </nav>
+
+
+    </div>
+
+    <nav id="mobile-nav" class="hidden border-t border-white/10 bg-black/95 px-4 py-4 md:hidden">
+      <div class="flex flex-col gap-3 text-sm">
+        <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#menu">Meny</a>
+
+        <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#takeaway">Avhämtning</a>
+        <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#location">Kontakt</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- Hero Section -->
+    <section class="hero-overlay relative flex min-h-[95vh] items-center px-4 pt-28 sm:px-6 lg:px-8">
+      <div class="mx-auto grid w-full max-w-7xl gap-8 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-12">
+          <p class="mb-4 inline-flex items-center rounded-full border border-accent/50 bg-black/35 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-accent">Thairestaurang | Visby</p>
+          <h1 class="font-heading text-4xl leading-tight sm:text-5xl lg:text-6xl">Autentiska thaismaker i Visby</h1>
+          <p class="mt-5 max-w-2xl text-base text-textSoft sm:text-lg">Färska råvaror, tydliga smaker och ett varmt thailändskt välkomnande. Perfekt för mysiga middagar, familjekvällar och takeaway.</p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="#takeaway" class="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/30 px-7 py-3 text-sm font-semibold text-textSoft transition hover:border-accent hover:text-accent">Beställ takeaway</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-accent">Meny</p>
+          <h2 class="font-heading text-3xl sm:text-4xl">Klassiska thairätter, lagade från grunden</h2>
+        </div>
+        <a href="#takeaway" class="inline-flex items-center justify-center rounded-full border border-accent/60 px-5 py-2 text-sm font-semibold text-accent transition hover:bg-accent hover:text-black">Beställ för avhämtning</a>
+      </div>
+
+      <div class="mb-10 grid gap-4 sm:grid-cols-3">
+        <div class="thai-border overflow-hidden rounded-2xl bg-panel/70">
+          <img src="assets/images/menu/pad-thai.jpeg" alt="Pad Thai" class="h-40 w-full object-cover" loading="lazy" />
+          <div class="p-4">
+            <p class="text-xs uppercase tracking-[0.14em] text-accent">Populär</p>
+            <h3 class="mt-1 font-semibold">Pad Thai</h3>
+            <p class="mt-1 text-sm text-textSoft">Wokade risnudlar med ägg, purjolök, morot och böngroddar.</p>
+          </div>
+        </div>
+        <div class="thai-border overflow-hidden rounded-2xl bg-panel/70">
+          <img src="assets/images/menu/gaeng-keowan.jpeg" alt="Gaeng Keowan" class="h-40 w-full object-cover" loading="lazy" />
+          <div class="p-4">
+            <p class="text-xs uppercase tracking-[0.14em] text-accent">Populär</p>
+            <h3 class="mt-1 font-semibold">Gaeng Keowan 🌶️</h3>
+            <p class="mt-1 text-sm text-textSoft">Grön curry med kokosmjölk, bambuskott, söt basilika och limeblad.</p>
+          </div>
+        </div>
+        <div class="thai-border overflow-hidden rounded-2xl bg-panel/70">
+          <img src="assets/images/menu/tom-yam-goong.jpeg" alt="Tom Yam Goong" class="h-40 w-full object-cover" loading="lazy" />
+          <div class="p-4">
+            <p class="text-xs uppercase tracking-[0.14em] text-accent">Populär</p>
+            <h3 class="mt-1 font-semibold">Tom Yam Goong 🌶️</h3>
+            <p class="mt-1 text-sm text-textSoft">Het och syrlig räksoppa med limeblad, citrongräs och koriander.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-10 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
+        <img src="assets/images/menu/khao-pat.jpeg" alt="Khao Pat" class="h-24 w-full rounded-xl object-cover md:h-28" loading="lazy" />
+        <img src="assets/images/menu/pad-krapaow.jpeg" alt="Pad Krapaow" class="h-24 w-full rounded-xl object-cover md:h-28" loading="lazy" />
+        <img src="assets/images/menu/moo-tod.jpeg" alt="Moo Tod" class="h-24 w-full rounded-xl object-cover md:h-28" loading="lazy" />
+        <img src="assets/images/menu/yam-nuea.jpeg" alt="Yam Nuea" class="h-24 w-full rounded-xl object-cover md:h-28" loading="lazy" />
+        <img src="assets/images/menu/tempura.png" alt="Tempuraräkor" class="h-24 w-full rounded-xl object-cover md:h-28" loading="lazy" />
+        <img src="assets/images/menu/wonton.png" alt="Kycklingwonton" class="h-24 w-full rounded-xl object-cover md:h-28" loading="lazy" />
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <article class="thai-border rounded-2xl bg-panel/80 p-6">
+          <h3 class="font-heading text-2xl">Förrätt</h3>
+          <div class="mt-5 space-y-5">
+            <div>
+              <p class="font-semibold">Vårrullar grönsaker 2 st</p>
+              <p class="mt-1 text-sm text-textSoft">Friterade vegetariska vårrullar, serveras med söt chilisås.</p>
+              <p class="mt-2 font-semibold text-accent">69 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Tempuraräkor 3 st</p>
+              <p class="mt-1 text-sm text-textSoft">Friterade räkor i luftig smet, serveras med söt chilisås.</p>
+              <p class="mt-2 font-semibold text-accent">79 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Wonton kyckling 5 st</p>
+              <p class="mt-1 text-sm text-textSoft">Friterad wonton fylld med kycklingfärs och vitlök.</p>
+              <p class="mt-2 font-semibold text-accent">79 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Tempuraräkor meny 4 st med ris</p>
+              <p class="mt-1 text-sm text-textSoft">Luftigt friterade räkor serverade som komplett meny med ris.</p>
+              <p class="mt-2 font-semibold text-accent">139 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Gai Satey 1 st</p>
+              <p class="mt-1 text-sm text-textSoft">Grillade marinerade kycklingspett med jordnötssås.</p>
+              <p class="mt-2 font-semibold text-accent">79 kr</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="thai-border rounded-2xl bg-panel/80 p-6">
+          <h3 class="font-heading text-2xl">Soppa / Gaeng</h3>
+          <p class="mt-2 text-xs text-textSoft">Välj protein till rätt 1-4: Kyckling/Tofu 139 kr, Biff/Fläsk 149 kr, Räkor 159 kr, Skaldjursmix 169 kr.</p>
+          <div class="mt-5 space-y-5">
+            <div>
+              <p class="font-semibold">Gaeng Phed 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Röd curry i kokosmjölk med paprika, bambuskott och söt basilika.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Gaeng Paneang 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Paneang curry i kokosmjölk med paprika, bambuskott och limeblad.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Gaeng Keowan 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Grön curry i kokosmjölk med paprika, bambuskott, söt basilika och limeblad.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Tom Kha Gai</p>
+              <p class="mt-1 text-sm text-textSoft">Kokosmjölkssoppa med kyckling, citrongräs, galanga, lime och svamp.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="thai-border rounded-2xl bg-panel/80 p-6">
+          <h3 class="font-heading text-2xl">Wok / Pad</h3>
+          <p class="mt-2 text-xs text-textSoft">Välj protein till rätt 5-11: Kyckling/Tofu 139 kr, Biff/Fläsk 149 kr, Räkor 159 kr, Skaldjursmix 169 kr.</p>
+          <div class="mt-5 space-y-5">
+            <div>
+              <p class="font-semibold">Pad Preaw Wan</p>
+              <p class="mt-1 text-sm text-textSoft">Wokad ananas, tomat, gurka, paprika, lök och morot i sötsursås.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Pad Nuea Nummanhoy med Bambu</p>
+              <p class="mt-1 text-sm text-textSoft">Wokad biff med ostronsås, grönsaker och bambu.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Pad Krapaow 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Wok med thaibasilika, lök, chili och vitlök.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Pad Met Mamoang</p>
+              <p class="mt-1 text-sm text-textSoft">Wokade grönsaker med cashewnötter.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Khao Pat / Stekt ris</p>
+              <p class="mt-1 text-sm text-textSoft">Stekt ris med ägg, grönsaker och koriander.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Pad Thai</p>
+              <p class="mt-1 text-sm text-textSoft">Wokade risnudlar med ägg, purjolök, morot och böngroddar.</p>
+            </div>
+            <div>
+              <p class="font-semibold">Pad Bami</p>
+              <p class="mt-1 text-sm text-textSoft">Wokade äggnudlar med paprika, broccoli, morot och groddar.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="thai-border rounded-2xl bg-panel/80 p-6">
+          <h3 class="font-heading text-2xl">Friterat / Grillat</h3>
+          <div class="mt-5 space-y-5">
+            <div>
+              <p class="font-semibold">Vårrullar grönsaker 4 st</p>
+              <p class="mt-1 text-sm text-textSoft">Friterade vegetariska vårrullar serverade med ris.</p>
+              <p class="mt-2 font-semibold text-accent">139 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Gai Satey 3 st</p>
+              <p class="mt-1 text-sm text-textSoft">Marinerade kycklingspett med jordnötssås.</p>
+              <p class="mt-2 font-semibold text-accent">139 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Moo Tod Kratiem Prikthai</p>
+              <p class="mt-1 text-sm text-textSoft">Friterat fläsk marinerat i vitlöks- och pepparsås, serveras med ris.</p>
+              <p class="mt-2 font-semibold text-accent">160 kr</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="thai-border rounded-2xl bg-panel/80 p-6">
+          <h3 class="font-heading text-2xl">Huvudrätter</h3>
+          <div class="mt-5 space-y-5">
+            <div>
+              <p class="font-semibold">Tom Yam Goong 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Het och syrlig räksoppa med kokosmjölk, limeblad och citrongräs.</p>
+              <p class="mt-2 font-semibold text-accent">160 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Yam Wunsen Talay 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Fläskfärs, räkor, bläckfisk och musslor med glasnudlar i kryddig sås.</p>
+              <p class="mt-2 font-semibold text-accent">179 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Yam Nuea 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Nötkött med lök och grönsallad i kryddig sås.</p>
+              <p class="mt-2 font-semibold text-accent">160 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Lap Kai / Kryddig kycklingsallad 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Kycklingfärs, lök, grönsallad och citron med kryddig sås.</p>
+              <p class="mt-2 font-semibold text-accent">160 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Kuay Tiew Moo</p>
+              <p class="mt-1 text-sm text-textSoft">Risnudlar med thaibuljong, thaiköttbullar, fläskfärs och sallad.</p>
+              <p class="mt-2 font-semibold text-accent">160 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Somtum / Papayasallad 🌶️</p>
+              <p class="mt-1 text-sm text-textSoft">Frisk och krispig papayasallad i klassisk thailändsk stil.</p>
+              <p class="mt-2 font-semibold text-accent">120 kr / 250 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Mix förrätter</p>
+              <p class="mt-1 text-sm text-textSoft">Tempuraräkor, vårrullar, kycklingwonton och krispig kyckling.</p>
+              <p class="mt-2 font-semibold text-accent">139 kr</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="thai-border rounded-2xl bg-panel/80 p-6">
+          <h3 class="font-heading text-2xl">Efterrätt</h3>
+          <div class="mt-5 space-y-5">
+            <div>
+              <p class="font-semibold">Roti (thailändska pannkakor)</p>
+              <p class="mt-1 text-sm text-textSoft">Nystekt roti med valfri topping: sötad kondenserad mjölk/socker eller chokladsås.</p>
+              <p class="mt-2 font-semibold text-accent">89 kr</p>
+            </div>
+            <div>
+              <p class="font-semibold">Crêpes (thaicrêpes)</p>
+              <p class="mt-1 text-sm text-textSoft">Serveras med Nutella, vispgrädde och banan.</p>
+              <p class="mt-2 font-semibold text-accent">89 kr</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+      <div class="thai-border rounded-3xl bg-panel/70 p-8 sm:p-10">
+        <p class="text-xs uppercase tracking-[0.2em] text-accent">Ban Hao-upplevelsen</p>
+        <h2 class="mt-3 font-heading text-3xl sm:text-4xl">"Ban Hao" betyder "vårt hem"</h2>
+        <p class="mt-5 max-w-3xl text-textSoft">Hos Thai Ban Hao lagas varje rätt som om vänner kommer på besök. Förvänta dig aromatiska buljonger, balanserad hetta och äkta thailändsk gästfrihet i Visby. Oavsett om du äter på plats eller tar med dig, vill vi att varje besök ska kännas personligt.</p>
+      </div>
+    </section>
+
+    <!-- Takeaway Section -->
+    <section id="takeaway" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+      <div class="thai-border rounded-3xl bg-gradient-to-r from-[#19130f] to-[#0f0f0f] p-8 sm:p-10">
+        <p class="text-xs uppercase tracking-[0.2em] text-accent">Avhämtning</p>
+        <h2 class="mt-2 font-heading text-3xl sm:text-4xl">Nylagad wok, redo för avhämtning</h2>
+        <p class="mt-4 max-w-2xl text-textSoft">Har du bråttom? Ring oss så lagar vi din beställning färsk för avhämtning. Perfekt efter strandpromenaden, stadsturen eller en sen arbetskväll.</p>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a href="tel:0736189005" class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-extrabold text-black transition hover:brightness-110">Ring och beställ: 073-618 90 05</a>
+          <a href="#menu" class="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-textSoft transition hover:border-accent hover:text-accent">Se hela menyn</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+      <div class="grid gap-6 lg:grid-cols-12">
+        <div class="thai-border rounded-2xl bg-panel/80 p-6 sm:p-8 lg:col-span-5">
+          <p class="text-xs uppercase tracking-[0.2em] text-accent">Besök oss</p>
+          <h2 class="mt-2 font-heading text-3xl">Äkta thaismaker i hjärtat av Visborg</h2>
+          <p class="mt-4 text-textSoft">Thai Ban Hao<br />Pilhagsvägen 2A<br />621 50 Visby, Gotland</p>
+          <div class="mt-6 space-y-2 text-sm text-textSoft">
+            <p><span class="font-semibold text-white">Alla dagar:</span> 11:00 – 20:00</p>
+          </div>
+          <a href="https://www.google.com/maps/place/Thai+Ban+Hao+Restaurang/@57.6163914,18.285104,17z/data=!3m1!4b1!4m6!3m5!1s0x46f7a99f07d3991f:0xb6cf96e4a00ebf0e!8m2!3d57.6163914!4d18.285104!16s%2Fg%2F11zkmy3k3m?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="mt-7 inline-flex rounded-full border border-accent/60 px-5 py-2 text-sm font-semibold text-accent transition hover:bg-accent hover:text-black">Öppna i Google Maps</a>
+        </div>
+
+        <div class="thai-border rounded-2xl bg-panel/80 p-3 lg:col-span-7">
+          <iframe
+            title="Karta till Thai Ban Hao"
+            src="https://www.google.com/maps?q=Pilhagsv%C3%A4gen%202A%2C%20621%2050%20Visby&output=embed"
+            class="h-full min-h-[320px] w-full rounded-xl border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Google Reviews Section -->
+    <section id="google-reviews" class="border-y border-white/10 bg-panel/80 px-4 py-10 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] text-accent">Google recensioner</p>
+            <h2 class="font-heading text-2xl sm:text-3xl">Senaste omdömen från gäster</h2>
+          </div>
+          <a id="google-reviews-link" href="#" target="_blank" rel="noopener noreferrer" class="hidden text-sm font-semibold text-accent transition hover:brightness-110">Visa alla på Google Maps</a>
+        </div>
+
+        <div class="mt-6 thai-border rounded-2xl bg-black/55 p-5 sm:p-6">
+          <div class="flex flex-wrap items-center gap-3 text-sm text-textSoft">
+            <span class="font-semibold text-white">Google-betyg:</span>
+            <span id="google-rating" class="rounded-full border border-accent/60 px-3 py-1 text-accent">Laddar...</span>
+            <span id="google-rating-count" class="text-white/70"></span>
+          </div>
+          <div id="google-reviews-list" class="mt-6 grid gap-4 md:grid-cols-3">
+            <article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">
+              Hämtar recensioner från Google...
+            </article>
+          </div>
+          <p id="google-reviews-status" class="mt-4 text-xs text-white/60"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-black/80 px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
+      <div>
+        <p class="font-heading text-2xl">Thai Ban Hao</p>
+        <p class="mt-3 max-w-sm text-sm text-textSoft">Autentiska thaismaker, varm service och det perfekta stoppet i Visby för middag och takeaway.</p>
+      </div>
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.12em] text-accent">Snabblänkar</p>
+        <div class="mt-3 flex flex-col gap-2 text-sm text-textSoft">
+          <a class="transition hover:text-accent" href="#menu">Meny</a>
+          <a class="transition hover:text-accent" href="#takeaway">Avhämtning</a>
+          <a class="transition hover:text-accent" href="#location">Kontakt</a>
+        </div>
+      </div>
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.12em] text-accent">Kontakt</p>
+        <div class="mt-3 space-y-2 text-sm text-textSoft">
+          <a href="tel:0736189005" class="flex items-center gap-3 transition hover:text-accent">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-current">
+              <path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.11.37 2.3.56 3.52.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.22.19 2.41.56 3.52a1 1 0 0 1-.24 1.01l-2.2 2.26Z" />
+            </svg>
+            <span>073-618 90 05</span>
+          </a>
+          <a href="mailto:aoyly@banhao.se" class="flex items-center gap-3 transition hover:text-accent">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-current">
+              <path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm0 2v.01L12 12l8-4.99V7H4Zm16 10V9.24l-7.47 4.67a1 1 0 0 1-1.06 0L4 9.24V17h16Z" />
+            </svg>
+            <span>aoyly@banhao.se</span>
+          </a>
+          <a href="https://www.instagram.com/thaibanhao/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition hover:text-accent">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-current">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm10.5 1.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+            </svg>
+            <span>Instagram: @thaibanhao</span>
+          </a>
+          <a href="https://www.facebook.com/search/top?q=thai%20ban%20hao%20%26%20thai%20cr%C3%AApe" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 transition hover:text-accent">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-current">
+              <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.87.24-1.46 1.49-1.46H16.7V5.02c-.31-.04-1.37-.12-2.6-.12-2.57 0-4.33 1.57-4.33 4.46V11H7v3h2.77v8h3.73Z" />
+            </svg>
+            <span>Facebook: Thai Ban Hao & Thai crêpe</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <p class="mx-auto mt-8 max-w-7xl text-xs text-white/55">&copy; <span id="year"></span> Ban Hao AB. Alla rättigheter förbehållna.</p>
+  </footer>
+
+  <!-- Mobile Bottom CTA Bar -->
+  <div class="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-black/95 md:hidden">
+    <div class="grid grid-cols-2 text-xs font-semibold">
+      <a href="tel:0736189005" class="flex flex-col items-center justify-center py-3 text-textSoft transition hover:text-accent">
+        <span>Ring</span>
+      </a>
+      <a href="https://www.google.com/maps/place/Thai+Ban+Hao+Restaurang/@57.6163914,18.285104,17z/data=!3m1!4b1!4m6!3m5!1s0x46f7a99f07d3991f:0xb6cf96e4a00ebf0e!8m2!3d57.6163914!4d18.285104!16s%2Fg%2F11zkmy3k3m?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center py-3 text-textSoft transition hover:text-accent">
+        <span>Karta</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const GOOGLE_PLACE_ID = '0x46f7a99f07d3991f:0xb6cf96e4a00ebf0e';
+    const GOOGLE_PLACE_QUERY = 'Thai Ban Hao Restaurang, Pilhagsvägen 2A, 621 50 Visby';
+    const GOOGLE_MAPS_API_KEY =
+      (window.TBH_CONFIG && typeof window.TBH_CONFIG.GOOGLE_MAPS_API_KEY === 'string')
+        ? window.TBH_CONFIG.GOOGLE_MAPS_API_KEY.trim()
+        : '';
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileLinks = mobileNav.querySelectorAll('a');
+    const yearEl = document.getElementById('year');
+    const ratingEl = document.getElementById('google-rating');
+    const ratingCountEl = document.getElementById('google-rating-count');
+    const reviewsListEl = document.getElementById('google-reviews-list');
+    const reviewsStatusEl = document.getElementById('google-reviews-status');
+    const reviewsLinkEl = document.getElementById('google-reviews-link');
+
+    menuToggle.addEventListener('click', () => {
+      mobileNav.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.add('hidden');
+      });
+    });
+
+    function starsFromRating(rating) {
+      const rounded = Math.round(rating);
+      return '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
+    }
+
+    function renderReviews(reviews) {
+      if (!reviews || reviews.length === 0) {
+        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga recensioner kunde hämtas just nu.</article>';
+        return;
+      }
+
+      const topRated = [...reviews]
+        .filter((review) => Number(review.rating) >= 4)
+        .sort((a, b) => (b.time || 0) - (a.time || 0))
+        .slice(0, 3);
+
+      if (topRated.length === 0) {
+        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga 4- eller 5-stjärniga recensioner finns i den data Google skickade just nu.</article>';
+        return;
+      }
+
+      reviewsListEl.innerHTML = topRated.map((review) => {
+        const author = review.author_name || 'Google-användare';
+        const text = (review.text || '').trim() || 'Ingen kommentar lämnades.';
+        const safeText = text.replace(/[&<>"']/g, (char) => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[char]));
+
+        return `
+          <article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">
+            <p class="text-accent">${starsFromRating(review.rating || 0)}</p>
+            <p class="mt-2">${safeText}</p>
+            <p class="mt-4 text-xs text-white/70">- ${author}</p>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function setStatus(message) {
+      reviewsStatusEl.textContent = message;
+    }
+
+    function handlePlaceDetails(place, status) {
+      if (status !== google.maps.places.PlacesServiceStatus.OK || !place) {
+        ratingEl.textContent = 'Kunde inte lasa';
+        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Recensioner kunde inte hamtas fran Google just nu.</article>';
+        setStatus('Status fran Google Places: ' + status);
+        return;
+      }
+
+      const rating = typeof place.rating === 'number' ? place.rating.toFixed(1) : '-';
+      const total = place.user_ratings_total || 0;
+
+      ratingEl.textContent = `${rating} / 5`;
+      ratingCountEl.textContent = total > 0 ? `(${total} omdomen)` : '';
+      renderReviews(place.reviews || []);
+
+      if (place.url) {
+        reviewsLinkEl.href = place.url;
+        reviewsLinkEl.classList.remove('hidden');
+      }
+
+      setStatus('');
+    }
+
+    function getDetailsByPlaceId(service, placeId) {
+      service.getDetails({
+        placeId,
+        fields: ['name', 'rating', 'user_ratings_total', 'reviews', 'url']
+      }, handlePlaceDetails);
+    }
+
+    window.initGoogleReviews = function initGoogleReviews() {
+      if (!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY.startsWith('REPLACE_')) {
+        ratingEl.textContent = 'Ej konfigurerad';
+        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Lagg in Google Maps API-nyckel i assets/js/site-config.js for att visa recensioner automatiskt.</article>';
+        setStatus('Google Reviews är inte aktiverat ännu.');
+        return;
+      }
+
+      if (!window.google || !window.google.maps || !window.google.maps.places) {
+        ratingEl.textContent = 'Fel';
+        setStatus('Kunde inte ladda Google Maps Places API.');
+        return;
+      }
+
+      const service = new google.maps.places.PlacesService(document.createElement('div'));
+
+      if (GOOGLE_PLACE_ID && GOOGLE_PLACE_ID.startsWith('ChIJ')) {
+        getDetailsByPlaceId(service, GOOGLE_PLACE_ID);
+        return;
+      }
+
+      service.findPlaceFromQuery({
+        query: GOOGLE_PLACE_QUERY,
+        fields: ['place_id', 'name']
+      }, (results, status) => {
+        if (status !== google.maps.places.PlacesServiceStatus.OK || !results || !results.length || !results[0].place_id) {
+          ratingEl.textContent = 'Kunde inte lasa';
+          reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Recensioner kunde inte hamtas fran Google just nu.</article>';
+          setStatus('Kunde inte hitta restaurangen via sokning. Status: ' + status);
+          return;
+        }
+
+        getDetailsByPlaceId(service, results[0].place_id);
+      });
+    };
+
+    (function loadGoogleMapsScript() {
+      if (!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY.startsWith('REPLACE_')) {
+        window.initGoogleReviews();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&language=sv&region=SE&callback=initGoogleReviews`;
+      script.async = true;
+      script.defer = true;
+      script.onerror = () => {
+        ratingEl.textContent = 'Fel';
+        setStatus('Misslyckades att ladda Google scriptet.');
+      };
+      document.body.appendChild(script);
+    })();
+
+    yearEl.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
