@@ -518,7 +518,7 @@
       }
 
       const topRated = [...reviews]
-        .filter((review) => Number(review.rating) >= 4)
+        .filter((review) => Number(review.rating) >= 5)
         .sort((a, b) => (b.time || 0) - (a.time || 0))
         .slice(0, 3);
 
