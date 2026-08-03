@@ -110,6 +110,12 @@
         <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#location">Kontakt</a>
       </div>
     </nav>
+
+    <div id="global-notice-strip" class="hidden border-t border-accent/40 bg-black/90">
+      <div class="mx-auto max-w-7xl px-4 py-2 text-center text-xs font-semibold tracking-[0.08em] text-accent sm:px-6 lg:px-8">
+        <p id="global-notice-strip-text"></p>
+      </div>
+    </div>
   </header>
 
   <main id="top">
@@ -117,6 +123,12 @@
     <section class="hero-overlay relative flex min-h-[95vh] items-center px-4 pt-28 sm:px-6 lg:px-8">
       <div class="mx-auto grid w-full max-w-7xl gap-8 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-12">
+          <div id="hero-notice-card" class="mb-6 hidden max-w-3xl rounded-2xl border border-accent/60 bg-black/65 p-4 shadow-glow backdrop-blur-sm sm:p-5" role="status" aria-live="polite">
+            <p id="hero-notice-eyebrow" class="text-xs font-semibold uppercase tracking-[0.2em] text-accent"></p>
+            <p id="hero-notice-title" class="mt-2 text-sm font-medium text-textMain sm:text-base"></p>
+            <p id="hero-notice-message" class="mt-1 text-sm text-textSoft"></p>
+            <a id="hero-notice-cta" href="#takeaway" class="mt-4 inline-flex hidden items-center justify-center rounded-full border border-accent/60 px-5 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent transition hover:bg-accent hover:text-black">Beställ takeaway</a>
+          </div>
           <p class="mb-4 inline-flex items-center rounded-full border border-accent/50 bg-black/35 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-accent">Thairestaurang | Visby</p>
           <h1 class="font-heading text-4xl leading-tight sm:text-5xl lg:text-6xl">Autentiska thaismaker i Visby</h1>
           <p class="mt-5 max-w-2xl text-base text-textSoft sm:text-lg">Färska råvaror, tydliga smaker och ett varmt thailändskt välkomnande. Perfekt för mysiga middagar, familjekvällar och takeaway.</p>
@@ -489,6 +501,16 @@
     const menuToggle = document.getElementById('menu-toggle');
     const mobileNav = document.getElementById('mobile-nav');
     const mobileLinks = mobileNav.querySelectorAll('a');
+    const noticeConfig = (window.TBH_CONFIG && typeof window.TBH_CONFIG.NOTICE === 'object' && window.TBH_CONFIG.NOTICE !== null)
+      ? window.TBH_CONFIG.NOTICE
+      : null;
+    const globalNoticeStripEl = document.getElementById('global-notice-strip');
+    const globalNoticeStripTextEl = document.getElementById('global-notice-strip-text');
+    const heroNoticeCardEl = document.getElementById('hero-notice-card');
+    const heroNoticeEyebrowEl = document.getElementById('hero-notice-eyebrow');
+    const heroNoticeTitleEl = document.getElementById('hero-notice-title');
+    const heroNoticeMessageEl = document.getElementById('hero-notice-message');
+    const heroNoticeCtaEl = document.getElementById('hero-notice-cta');
     const yearEl = document.getElementById('year');
     const ratingEl = document.getElementById('google-rating');
     const ratingCountEl = document.getElementById('google-rating-count');
@@ -505,6 +527,81 @@
         mobileNav.classList.add('hidden');
       });
     });
+
+    function parseDateOnly(dateValue) {
+      if (typeof dateValue !== 'string' || !dateValue.trim()) {
+        return null;
+      }
+
+      const parsed = new Date(dateValue.trim() + 'T00:00:00');
+      if (Number.isNaN(parsed.getTime())) {
+        return null;
+      }
+
+      return parsed;
+    }
+
+    function isNoticeActive(config) {
+      if (!config || config.enabled !== true) {
+        return false;
+      }
+
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const startDate = parseDateOnly(config.startDate);
+      const endDate = parseDateOnly(config.endDate);
+
+      if (startDate && today < startDate) {
+        return false;
+      }
+
+      if (endDate && today > endDate) {
+        return false;
+      }
+
+      return true;
+    }
+
+    function renderGlobalNotice() {
+      if (!isNoticeActive(noticeConfig)) {
+        return;
+      }
+
+      const eyebrow = typeof noticeConfig.eyebrow === 'string' && noticeConfig.eyebrow.trim()
+        ? noticeConfig.eyebrow.trim()
+        : 'Tillfällig information';
+      const title = typeof noticeConfig.title === 'string' && noticeConfig.title.trim()
+        ? noticeConfig.title.trim()
+        : 'Viktig information';
+      const message = typeof noticeConfig.message === 'string' && noticeConfig.message.trim()
+        ? noticeConfig.message.trim()
+        : '';
+      const stickyText = typeof noticeConfig.stickyText === 'string' && noticeConfig.stickyText.trim()
+        ? noticeConfig.stickyText.trim()
+        : [title, message].filter(Boolean).join(' - ');
+      const ctaLabel = typeof noticeConfig.ctaLabel === 'string' ? noticeConfig.ctaLabel.trim() : '';
+      const ctaHref = typeof noticeConfig.ctaHref === 'string' && noticeConfig.ctaHref.trim()
+        ? noticeConfig.ctaHref.trim()
+        : '#takeaway';
+
+      heroNoticeEyebrowEl.textContent = eyebrow;
+      heroNoticeTitleEl.textContent = title;
+      heroNoticeMessageEl.textContent = message;
+      heroNoticeCardEl.classList.remove('hidden');
+
+      if (ctaLabel) {
+        heroNoticeCtaEl.textContent = ctaLabel;
+        heroNoticeCtaEl.href = ctaHref;
+        heroNoticeCtaEl.classList.remove('hidden');
+      }
+
+      if (stickyText) {
+        globalNoticeStripTextEl.textContent = stickyText;
+        globalNoticeStripEl.classList.remove('hidden');
+      }
+    }
+
+    renderGlobalNotice();
 
     function starsFromRating(rating) {
       const rounded = Math.round(rating);
