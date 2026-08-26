@@ -498,6 +498,10 @@
       (window.TBH_CONFIG && typeof window.TBH_CONFIG.GOOGLE_MAPS_API_KEY === 'string')
         ? window.TBH_CONFIG.GOOGLE_MAPS_API_KEY.trim()
         : '';
+    const manualReviewsConfig =
+      (window.TBH_CONFIG && Array.isArray(window.TBH_CONFIG.GOOGLE_FALLBACK_REVIEWS))
+        ? window.TBH_CONFIG.GOOGLE_FALLBACK_REVIEWS
+        : [];
     const menuToggle = document.getElementById('menu-toggle');
     const mobileNav = document.getElementById('mobile-nav');
     const mobileLinks = mobileNav.querySelectorAll('a');
@@ -608,6 +612,49 @@
       return '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
     }
 
+    function normalizeReviewKey(review) {
+      const author = typeof review.author_name === 'string' ? review.author_name.trim().toLowerCase() : '';
+      const text = typeof review.text === 'string' ? review.text.trim().toLowerCase() : '';
+      return `${author}::${text}`;
+    }
+
+    function getFiveStarReviews(googleReviews) {
+      const seen = new Set();
+      const merged = [];
+      const manualReviews = manualReviewsConfig.filter((review) => Number(review.rating) >= 5);
+      const googleTopRated = [...(googleReviews || [])]
+        .filter((review) => Number(review.rating) >= 5)
+        .sort((a, b) => (b.time || 0) - (a.time || 0));
+
+      [...manualReviews, ...googleTopRated].forEach((review) => {
+        const key = normalizeReviewKey(review);
+        if (!key || seen.has(key)) {
+          return;
+        }
+
+        seen.add(key);
+        merged.push(review);
+      });
+
+      return merged;
+    }
+
+    function renderFallbackReviews(statusMessage) {
+      const fallbackReviews = getFiveStarReviews([]);
+
+      if (fallbackReviews.length === 0) {
+        ratingEl.textContent = 'Fel';
+        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Recensioner kunde inte hamtas fran Google just nu.</article>';
+        setStatus(statusMessage);
+        return;
+      }
+
+      ratingEl.textContent = 'Se Google';
+      ratingCountEl.textContent = '';
+      setStatus(statusMessage);
+      renderReviews([]);
+    }
+
     let allTopRatedReviews = [];
     let currentReviewIndex = 0;
     let reviewRotationInterval = null;
@@ -638,32 +685,30 @@
       if (allTopRatedReviews.length === 0) return;
 
       const reviewsPerPage = 3;
+      const reviewCount = Math.min(reviewsPerPage, allTopRatedReviews.length);
       const reviewsToShow = [];
 
-      for (let i = 0; i < reviewsPerPage; i++) {
+      for (let i = 0; i < reviewCount; i++) {
         const index = (currentReviewIndex + i) % allTopRatedReviews.length;
         reviewsToShow.push(allTopRatedReviews[index]);
       }
 
       reviewsListEl.innerHTML = renderReviewsHTML(reviewsToShow);
-      // Jump by 3 to show completely new reviews each time, not overlapping
-      currentReviewIndex = (currentReviewIndex + reviewsPerPage) % allTopRatedReviews.length;
+
+      if (allTopRatedReviews.length > reviewCount) {
+        currentReviewIndex = (currentReviewIndex + reviewCount) % allTopRatedReviews.length;
+      }
     }
 
     function renderReviews(reviews) {
-      if (!reviews || reviews.length === 0) {
+      const topRatedReviews = getFiveStarReviews(reviews);
+
+      if (topRatedReviews.length === 0) {
         reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga recensioner kunde hämtas just nu.</article>';
         return;
       }
 
-      allTopRatedReviews = [...reviews]
-        .filter((review) => Number(review.rating) >= 5)
-        .sort((a, b) => (b.time || 0) - (a.time || 0));
-
-      if (allTopRatedReviews.length === 0) {
-        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga 4- eller 5-stjärniga recensioner finns i den data Google skickade just nu.</article>';
-        return;
-      }
+      allTopRatedReviews = topRatedReviews;
 
       // Clear any existing rotation interval
       if (reviewRotationInterval) {
@@ -714,15 +759,12 @@
 
     window.initGoogleReviews = function initGoogleReviews() {
       if (!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY.startsWith('REPLACE_')) {
-        ratingEl.textContent = 'Ej konfigurerad';
-        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Lagg in Google Maps API-nyckel i assets/js/site-config.js for att visa recensioner automatiskt.</article>';
-        setStatus('Google Reviews är inte aktiverat ännu.');
+        renderFallbackReviews('Google Reviews ar inte aktiverat. Visar manuellt valda 5-stjarniga recensioner.');
         return;
       }
 
       if (!window.google || !window.google.maps || !window.google.maps.places) {
-        ratingEl.textContent = 'Fel';
-        setStatus('Kunde inte ladda Google Maps Places API.');
+        renderFallbackReviews('Kunde inte ladda Google Maps Places API. Visar manuellt valda 5-stjarniga recensioner.');
         return;
       }
 
@@ -738,9 +780,7 @@
         fields: ['place_id', 'name']
       }, (results, status) => {
         if (status !== google.maps.places.PlacesServiceStatus.OK || !results || !results.length || !results[0].place_id) {
-          ratingEl.textContent = 'Kunde inte lasa';
-          reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Recensioner kunde inte hamtas fran Google just nu.</article>';
-          setStatus('Kunde inte hitta restaurangen via sokning. Status: ' + status);
+          renderFallbackReviews('Kunde inte hitta restaurangen via sokning. Visar manuellt valda 5-stjarniga recensioner. Status: ' + status);
           return;
         }
 
@@ -749,6 +789,14 @@
     };
 
     (function loadGoogleMapsScript() {
+      let googleReviewsInitialized = false;
+
+      const originalInitGoogleReviews = window.initGoogleReviews;
+      window.initGoogleReviews = function wrappedInitGoogleReviews() {
+        googleReviewsInitialized = true;
+        originalInitGoogleReviews();
+      };
+
       if (!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY.startsWith('REPLACE_')) {
         window.initGoogleReviews();
         return;
@@ -759,10 +807,15 @@
       script.async = true;
       script.defer = true;
       script.onerror = () => {
-        ratingEl.textContent = 'Fel';
-        setStatus('Misslyckades att ladda Google scriptet.');
+        renderFallbackReviews('Misslyckades att ladda Google scriptet. Visar manuellt valda 5-stjarniga recensioner.');
       };
       document.body.appendChild(script);
+
+      window.setTimeout(() => {
+        if (!googleReviewsInitialized) {
+          renderFallbackReviews('Google svarade inte lokalt. Kontrollera att localhost ar tillaten i API-nyckelns website restrictions. Visar manuellt valda 5-stjarniga recensioner.');
+        }
+      }, 4000);
     })();
 
     yearEl.textContent = new Date().getFullYear();
