@@ -45,7 +45,9 @@ window.TBH_CONFIG = {
       rating: 5,
       text: "Nydelig mat tusen takk"
     }
-  ],
+     ],
+     // Note: The file must be saved with UTF-8 encoding for Nordic characters (å, ä, ö) to display correctly.
+     GOOGLE_FALLBACK_REVIEWS_ENCODING: "UTF-8"
 
   // Reusable global notice shown in hero + sticky strip under header.
   // Date format: YYYY-MM-DD (inclusive). Leave start/end empty to always show when enabled=true.
