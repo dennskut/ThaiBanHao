@@ -608,23 +608,12 @@
       return '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
     }
 
-    function renderReviews(reviews) {
-      if (!reviews || reviews.length === 0) {
-        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga recensioner kunde hämtas just nu.</article>';
-        return;
-      }
+    let allTopRatedReviews = [];
+    let currentReviewIndex = 0;
+    let reviewRotationInterval = null;
 
-      const topRated = [...reviews]
-        .filter((review) => Number(review.rating) >= 5)
-        .sort((a, b) => (b.time || 0) - (a.time || 0))
-        .slice(0, 3);
-
-      if (topRated.length === 0) {
-        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga 4- eller 5-stjärniga recensioner finns i den data Google skickade just nu.</article>';
-        return;
-      }
-
-      reviewsListEl.innerHTML = topRated.map((review) => {
+    function renderReviewsHTML(reviewsToShow) {
+      return reviewsToShow.map((review) => {
         const author = review.author_name || 'Google-användare';
         const text = (review.text || '').trim() || 'Ingen kommentar lämnades.';
         const safeText = text.replace(/[&<>"']/g, (char) => ({
@@ -643,6 +632,49 @@
           </article>
         `;
       }).join('');
+    }
+
+    function rotateReviews() {
+      if (allTopRatedReviews.length === 0) return;
+
+      const reviewsPerPage = 3;
+      const reviewsToShow = [];
+
+      for (let i = 0; i < reviewsPerPage; i++) {
+        const index = (currentReviewIndex + i) % allTopRatedReviews.length;
+        reviewsToShow.push(allTopRatedReviews[index]);
+      }
+
+      reviewsListEl.innerHTML = renderReviewsHTML(reviewsToShow);
+      currentReviewIndex = (currentReviewIndex + 1) % allTopRatedReviews.length;
+    }
+
+    function renderReviews(reviews) {
+      if (!reviews || reviews.length === 0) {
+        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga recensioner kunde hämtas just nu.</article>';
+        return;
+      }
+
+      allTopRatedReviews = [...reviews]
+        .filter((review) => Number(review.rating) >= 5)
+        .sort((a, b) => (b.time || 0) - (a.time || 0));
+
+      if (allTopRatedReviews.length === 0) {
+        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga 4- eller 5-stjärniga recensioner finns i den data Google skickade just nu.</article>';
+        return;
+      }
+
+      // Clear any existing rotation interval
+      if (reviewRotationInterval) {
+        clearInterval(reviewRotationInterval);
+      }
+
+      // Initial render
+      currentReviewIndex = 0;
+      rotateReviews();
+
+      // Start rotation every 10 seconds
+      reviewRotationInterval = setInterval(rotateReviews, 10000);
     }
 
     function setStatus(message) {
