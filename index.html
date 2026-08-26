@@ -646,7 +646,8 @@
       }
 
       reviewsListEl.innerHTML = renderReviewsHTML(reviewsToShow);
-      currentReviewIndex = (currentReviewIndex + 1) % allTopRatedReviews.length;
+      // Jump by 3 to show completely new reviews each time, not overlapping
+      currentReviewIndex = (currentReviewIndex + reviewsPerPage) % allTopRatedReviews.length;
     }
 
     function renderReviews(reviews) {
