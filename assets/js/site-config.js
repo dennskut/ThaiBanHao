@@ -1,7 +1,7 @@
 window.TBH_CONFIG = {
   // Replace with your Google Maps API key.
   // Keep API key restricted in Google Cloud to your domain only.
-  GOOGLE_MAPS_API_KEY: "AIzaSyBuFLzyqHnCMT7_SWc1BMGVcwNe2nY9DRA",
+  GOOGLE_MAPS_API_KEY: "AIzaSyAq0JGVoyrREcuXDe_MakGTfj7k32ILX2M",
 
   // Reusable global notice shown in hero + sticky strip under header.
   // Date format: YYYY-MM-DD (inclusive). Leave start/end empty to always show when enabled=true.
