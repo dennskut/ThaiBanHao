@@ -384,10 +384,11 @@
           <p class="text-xs uppercase tracking-[0.2em] text-accent">Besök oss</p>
           <h2 class="mt-2 font-heading text-3xl">Äkta thaismaker i hjärtat av Visborg</h2>
           <p class="mt-4 text-textSoft">Thai Ban Hao<br />Pilhagsvägen 2A<br />621 50 Visby, Gotland</p>
-          <div class="mt-6 space-y-2 text-sm text-textSoft">
-            <p class="text-xs uppercase tracking-[0.18em] text-accent">Från och med måndag nästa vecka</p>
-            <p><span class="font-semibold text-white">Måndag-Torsdag:</span> 11:00 – 20:00</p>
-            <p><span class="font-semibold text-white">Fredag-Söndag:</span> 11:00 – 21:00</p>
+          <div class="mt-6 space-y-2 text-sm text-textSoft" aria-label="Öppettider">
+            <p class="text-xs uppercase tracking-[0.18em] text-accent">Öppettider</p>
+            <div id="opening-hours-list" class="space-y-2">
+              <p><span class="font-semibold text-white">Alla dagar:</span> 11:00 – 21:00</p>
+            </div>
           </div>
           <a href="https://www.google.com/maps/place/Thai+Ban+Hao+Restaurang/@57.6163914,18.285104,17z/data=!3m1!4b1!4m6!3m5!1s0x46f7a99f07d3991f:0xb6cf96e4a00ebf0e!8m2!3d57.6163914!4d18.285104!16s%2Fg%2F11zkmy3k3m?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="mt-7 inline-flex rounded-full border border-accent/60 px-5 py-2 text-sm font-semibold text-accent transition hover:bg-accent hover:text-black">Öppna i Google Maps</a>
         </div>
@@ -510,6 +511,9 @@
     const noticeConfig = (window.TBH_CONFIG && typeof window.TBH_CONFIG.NOTICE === 'object' && window.TBH_CONFIG.NOTICE !== null)
       ? window.TBH_CONFIG.NOTICE
       : null;
+    const openingHoursConfig = (window.TBH_CONFIG && typeof window.TBH_CONFIG.OPENING_HOURS === 'object' && window.TBH_CONFIG.OPENING_HOURS !== null)
+      ? window.TBH_CONFIG.OPENING_HOURS
+      : null;
     const globalNoticeStripEl = document.getElementById('global-notice-strip');
     const globalNoticeStripTextEl = document.getElementById('global-notice-strip-text');
     const heroNoticeCardEl = document.getElementById('hero-notice-card');
@@ -523,6 +527,7 @@
     const reviewsListEl = document.getElementById('google-reviews-list');
     const reviewsStatusEl = document.getElementById('google-reviews-status');
     const reviewsLinkEl = document.getElementById('google-reviews-link');
+    const openingHoursListEl = document.getElementById('opening-hours-list');
 
     menuToggle.addEventListener('click', () => {
       mobileNav.classList.toggle('hidden');
@@ -568,6 +573,31 @@
       return true;
     }
 
+    function getTodayDateOnly() {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+
+    function renderOpeningHours() {
+      if (!openingHoursListEl || !openingHoursConfig) {
+        return;
+      }
+
+      const activeFrom = parseDateOnly(openingHoursConfig.activeFrom);
+      const hours = activeFrom && getTodayDateOnly() >= activeFrom
+        ? openingHoursConfig.upcoming
+        : openingHoursConfig.current;
+
+      if (!Array.isArray(hours) || hours.length === 0) {
+        return;
+      }
+
+      openingHoursListEl.innerHTML = hours
+        .filter((item) => item && typeof item.label === 'string' && typeof item.hours === 'string')
+        .map((item) => `<p><span class="font-semibold text-white">${item.label.trim()}:</span> ${item.hours.trim()}</p>`)
+        .join('');
+    }
+
     function renderGlobalNotice() {
       if (!isNoticeActive(noticeConfig)) {
         return;
@@ -607,6 +637,7 @@
       }
     }
 
+    renderOpeningHours();
     renderGlobalNotice();
 
     function starsFromRating(rating) {

@@ -47,6 +47,19 @@ window.TBH_CONFIG = {
     }
   ],
 
+  // Opening hours switch automatically on the configured date.
+  // Date format: YYYY-MM-DD (inclusive).
+  OPENING_HOURS: {
+    activeFrom: "2026-08-31",
+    current: [
+      { label: "Alla dagar", hours: "11:00 – 21:00" }
+    ],
+    upcoming: [
+      { label: "Måndag-Torsdag", hours: "11:00 – 20:00" },
+      { label: "Fredag-Söndag", hours: "11:00 – 21:00" }
+    ]
+  },
+
   // Reusable global notice shown in hero + sticky strip under header.
   // Date format: YYYY-MM-DD (inclusive). Leave start/end empty to always show when enabled=true.
   NOTICE: {
