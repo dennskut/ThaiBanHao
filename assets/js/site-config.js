@@ -8,46 +8,44 @@ window.TBH_CONFIG = {
     {
       author_name: "Annika Soderdahl",
       rating: 5,
-      text: "Basta kyckling rod curryn"
+      text: "Bästa kycklingröd curryn"
     },
     {
       author_name: "Sofia Nilsson",
       rating: 5,
-      text: "Jattegod mat, jattegullig tjej i kassan, kommer absolut tillbaka!"
+      text: "Jättegod mat, jättegullig tjej i kassan, kommer absolut tillbaka!"
     },
     {
       author_name: "Homer Nordgren",
       rating: 5,
-      text: "Valdigt god mat och bra service!"
+      text: "Väldigt god mat och bra service!"
     },
     {
-      author_name: "Kjersti Astad",
+      author_name: "Kjersti Åstad",
       rating: 5,
       text: "Beste thaimaten vi har smakt i hele Sverige. Rask service og fin liten restaurant"
     },
     {
       author_name: "Nazli",
       rating: 5,
-      text: "Supergott och autentiskt! Aven barnen alskade det!"
+      text: "Supergott och autentiskt! Även barnen älskade det!"
     },
     {
       author_name: "Stephan Berg",
       rating: 5,
-      text: "Meget laekkert og hjemmelavet mad til fa penge"
+      text: "Meget lækkert og hjemmelavet mad til få penge"
     },
     {
       author_name: "Niklas",
       rating: 5,
-      text: "Jag och min sambo kommer fran Hoga Kusten i norra Sverige och har nu atit har tva ganger under var semester pa Gotland. Maten har varit helt fantastisk bada gangerna.\n\nDen stora Som Tum var helt utsokt och perfekt att dela pa. Personalen ar otroligt trevlig, hjalpsam och far en att kanna sig varmt valkommen.\n\nEnligt oss ar detta en av de absolut basta restaurangerna pa Gotland. Vi kommer definitivt tillbaka och rekommenderar varmt restaurangen till alla.\n\nAven fullstandiga rattigheter for det som onskar nagon alkoholhaltig dryck till maten.\n\nStort tack for fantastisk mat och ett underbart bemotande!"
+      text: "Jag och min sambo kommer från Höga Kusten i norra Sverige och har nu ätit här två gånger under vår semester på Gotland. Maten har varit helt fantastisk båda gångerna.\n\nDen stora Som Tum var helt utsökt och perfekt att dela på. Personalen är otroligt trevlig, hjälpsam och får en att känna sig varmt välkommen.\n\nEnligt oss är detta en av de absolut bästa restaurangerna på Gotland. Vi kommer definitivt tillbaka och rekommenderar varmt restaurangen till alla.\n\nÄven fullständiga rättigheter för det som önskar någon alkoholhaltig dryck till maten.\n\nStort tack för fantastisk mat och ett underbart bemötande!"
     },
     {
-      author_name: "Kjell Tommerdal",
+      author_name: "Kjell Tømmerdal",
       rating: 5,
       text: "Nydelig mat tusen takk"
     }
-     ],
-     // Note: The file must be saved with UTF-8 encoding for Nordic characters (å, ä, ö) to display correctly.
-     GOOGLE_FALLBACK_REVIEWS_ENCODING: "UTF-8"
+  ],
 
   // Reusable global notice shown in hero + sticky strip under header.
   // Date format: YYYY-MM-DD (inclusive). Leave start/end empty to always show when enabled=true.
