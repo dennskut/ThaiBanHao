@@ -1,12 +1,24 @@
 window.TBH_CONFIG = {
-  // Replace with your Google Maps API key.
-  // Keep API key restricted in Google Cloud to your domain only.
-  GOOGLE_MAPS_API_KEY: "AIzaSyAq0JGVoyrREcuXDe_MakGTfj7k32ILX2M",
-
-  // Manual fallback reviews used when Google only returns a limited subset.
-  GOOGLE_FALLBACK_REVIEWS: [
+  // Reviews copied manually from Google Maps. Shown three at a time, rotating every 10 seconds.
+  // Only 5-star reviews are displayed. Newest first.
+  REVIEWS: [
     {
-      author_name: "Annika Soderdahl",
+      author_name: "Josefin Lennartsson",
+      rating: 5,
+      text: "Bästa thaimaten jag ätit i Visby!"
+    },
+    {
+      author_name: "Jonathan Höglund",
+      rating: 5,
+      text: "Take away tog 15 minuter, kommer in till restaurangen och det är fullsatt, mysig stämning! Vi beställde Pad Thai och Pad Bami, lagom/stora portioner! Maten var supergod! Personalen var positiva och trevliga."
+    },
+    {
+      author_name: "Hody Chan",
+      rating: 5,
+      text: "Jättebra thaimat! Den bäst thairestaurang i Visby och Stockholm! 😋😋😋"
+    },
+    {
+      author_name: "Annika Söderdahl",
       rating: 5,
       text: "Bästa kycklingröd curryn"
     },

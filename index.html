@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
   <link rel="apple-touch-icon" href="assets/images/logo.png" />
   <meta name="description" content="Thai Ban Hao i Visby. Ät här, beställ avhämtning och njut av autentiska thaismaker i en varm miljö." />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://maps.googleapis.com; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -414,21 +414,11 @@
             <p class="text-xs uppercase tracking-[0.2em] text-accent">Google recensioner</p>
             <h2 class="font-heading text-2xl sm:text-3xl">Senaste omdömen från gäster</h2>
           </div>
-          <a id="google-reviews-link" href="#" target="_blank" rel="noopener noreferrer" class="hidden text-sm font-semibold text-accent transition hover:brightness-110">Visa alla på Google Maps</a>
+          <a href="https://www.google.com/maps/place/Thai+Ban+Hao+Restaurang/@57.6163914,18.285104,17z/data=!3m1!4b1!4m6!3m5!1s0x46f7a99f07d3991f:0xb6cf96e4a00ebf0e!8m2!3d57.6163914!4d18.285104!16s%2Fg%2F11zkmy3k3m" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-accent transition hover:brightness-110">Visa alla på Google Maps</a>
         </div>
 
         <div class="mt-6 thai-border rounded-2xl bg-black/55 p-5 sm:p-6">
-          <div class="flex flex-wrap items-center gap-3 text-sm text-textSoft">
-            <span class="font-semibold text-white">Google-betyg:</span>
-            <span id="google-rating" class="rounded-full border border-accent/60 px-3 py-1 text-accent">Laddar...</span>
-            <span id="google-rating-count" class="text-white/70"></span>
-          </div>
-          <div id="google-reviews-list" class="mt-6 grid gap-4 md:grid-cols-3">
-            <article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">
-              Hämtar recensioner från Google...
-            </article>
-          </div>
-          <p id="google-reviews-status" class="mt-4 text-xs text-white/60"></p>
+          <div id="google-reviews-list" class="grid gap-4 md:grid-cols-3"></div>
         </div>
       </div>
     </section>
@@ -495,15 +485,9 @@
   </div>
 
   <script>
-    const GOOGLE_PLACE_ID = '0x46f7a99f07d3991f:0xb6cf96e4a00ebf0e';
-    const GOOGLE_PLACE_QUERY = 'Thai Ban Hao Restaurang, Pilhagsvägen 2A, 621 50 Visby';
-    const GOOGLE_MAPS_API_KEY =
-      (window.TBH_CONFIG && typeof window.TBH_CONFIG.GOOGLE_MAPS_API_KEY === 'string')
-        ? window.TBH_CONFIG.GOOGLE_MAPS_API_KEY.trim()
-        : '';
-    const manualReviewsConfig =
-      (window.TBH_CONFIG && Array.isArray(window.TBH_CONFIG.GOOGLE_FALLBACK_REVIEWS))
-        ? window.TBH_CONFIG.GOOGLE_FALLBACK_REVIEWS
+    const reviewsConfig =
+      (window.TBH_CONFIG && Array.isArray(window.TBH_CONFIG.REVIEWS))
+        ? window.TBH_CONFIG.REVIEWS
         : [];
     const menuToggle = document.getElementById('menu-toggle');
     const mobileNav = document.getElementById('mobile-nav');
@@ -522,11 +506,7 @@
     const heroNoticeMessageEl = document.getElementById('hero-notice-message');
     const heroNoticeCtaEl = document.getElementById('hero-notice-cta');
     const yearEl = document.getElementById('year');
-    const ratingEl = document.getElementById('google-rating');
-    const ratingCountEl = document.getElementById('google-rating-count');
     const reviewsListEl = document.getElementById('google-reviews-list');
-    const reviewsStatusEl = document.getElementById('google-reviews-status');
-    const reviewsLinkEl = document.getElementById('google-reviews-link');
     const openingHoursListEl = document.getElementById('opening-hours-list');
 
     menuToggle.addEventListener('click', () => {
@@ -641,215 +621,61 @@
     renderGlobalNotice();
 
     function starsFromRating(rating) {
-      const rounded = Math.round(rating);
+      const rounded = Math.max(0, Math.min(5, Math.round(rating)));
       return '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
     }
 
-    function normalizeReviewKey(review) {
-      const author = typeof review.author_name === 'string' ? review.author_name.trim().toLowerCase() : '';
-      const text = typeof review.text === 'string' ? review.text.trim().toLowerCase() : '';
-      return `${author}::${text}`;
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
     }
 
-    function getFiveStarReviews(googleReviews) {
-      const seen = new Set();
-      const merged = [];
-      const manualReviews = manualReviewsConfig.filter((review) => Number(review.rating) >= 5);
-      const googleTopRated = [...(googleReviews || [])]
-        .filter((review) => Number(review.rating) >= 5)
-        .sort((a, b) => (b.time || 0) - (a.time || 0));
-
-      [...manualReviews, ...googleTopRated].forEach((review) => {
-        const key = normalizeReviewKey(review);
-        if (!key || seen.has(key)) {
-          return;
-        }
-
-        seen.add(key);
-        merged.push(review);
-      });
-
-      return merged;
-    }
-
-    function renderFallbackReviews(statusMessage) {
-      const fallbackReviews = getFiveStarReviews([]);
-
-      if (fallbackReviews.length === 0) {
-        ratingEl.textContent = 'Fel';
-        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Recensioner kunde inte hamtas fran Google just nu.</article>';
-        setStatus(statusMessage);
-        return;
-      }
-
-      ratingEl.textContent = 'Se Google';
-      ratingCountEl.textContent = '';
-      setStatus(statusMessage);
-      renderReviews([]);
-    }
-
-    let allTopRatedReviews = [];
+    const reviews = reviewsConfig.filter((review) =>
+      review && typeof review.text === 'string' && review.text.trim() && Number(review.rating) >= 5
+    );
     let currentReviewIndex = 0;
-    let reviewRotationInterval = null;
 
     function renderReviewsHTML(reviewsToShow) {
       return reviewsToShow.map((review) => {
-        const author = review.author_name || 'Google-användare';
-        const text = (review.text || '').trim() || 'Ingen kommentar lämnades.';
-        const safeText = text.replace(/[&<>"']/g, (char) => ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        }[char]));
+        const author = (typeof review.author_name === 'string' && review.author_name.trim()) || 'Google-användare';
 
         return `
           <article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">
-            <p class="text-accent">${starsFromRating(review.rating || 0)}</p>
-            <p class="mt-2">${safeText}</p>
-            <p class="mt-4 text-xs text-white/70">- ${author}</p>
+            <p class="text-accent">${starsFromRating(review.rating)}</p>
+            <p class="mt-2 whitespace-pre-line">${escapeHtml(review.text.trim())}</p>
+            <p class="mt-4 text-xs text-white/70">- ${escapeHtml(author)}</p>
           </article>
         `;
       }).join('');
     }
 
     function rotateReviews() {
-      if (allTopRatedReviews.length === 0) return;
-
-      const reviewsPerPage = 3;
-      const reviewCount = Math.min(reviewsPerPage, allTopRatedReviews.length);
+      const reviewsPerPage = Math.min(3, reviews.length);
       const reviewsToShow = [];
 
-      for (let i = 0; i < reviewCount; i++) {
-        const index = (currentReviewIndex + i) % allTopRatedReviews.length;
-        reviewsToShow.push(allTopRatedReviews[index]);
+      for (let i = 0; i < reviewsPerPage; i++) {
+        reviewsToShow.push(reviews[(currentReviewIndex + i) % reviews.length]);
       }
 
       reviewsListEl.innerHTML = renderReviewsHTML(reviewsToShow);
-
-      if (allTopRatedReviews.length > reviewCount) {
-        currentReviewIndex = (currentReviewIndex + reviewCount) % allTopRatedReviews.length;
-      }
+      currentReviewIndex = (currentReviewIndex + reviewsPerPage) % reviews.length;
     }
 
-    function renderReviews(reviews) {
-      const topRatedReviews = getFiveStarReviews(reviews);
-
-      if (topRatedReviews.length === 0) {
-        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Inga recensioner kunde hämtas just nu.</article>';
-        return;
-      }
-
-      allTopRatedReviews = topRatedReviews;
-
-      // Clear any existing rotation interval
-      if (reviewRotationInterval) {
-        clearInterval(reviewRotationInterval);
-      }
-
-      // Initial render
-      currentReviewIndex = 0;
+    if (reviews.length > 0) {
       rotateReviews();
 
-      // Start rotation every 10 seconds
-      reviewRotationInterval = setInterval(rotateReviews, 10000);
+      // Rotate every 10 seconds when there are more reviews than fit on one page
+      if (reviews.length > 3) {
+        setInterval(rotateReviews, 10000);
+      }
+    } else {
+      document.getElementById('google-reviews').classList.add('hidden');
     }
-
-    function setStatus(message) {
-      reviewsStatusEl.textContent = message;
-    }
-
-    function handlePlaceDetails(place, status) {
-      if (status !== google.maps.places.PlacesServiceStatus.OK || !place) {
-        ratingEl.textContent = 'Kunde inte lasa';
-        reviewsListEl.innerHTML = '<article class="rounded-xl border border-white/10 bg-black/45 p-4 text-sm text-textSoft">Recensioner kunde inte hamtas fran Google just nu.</article>';
-        setStatus('Status fran Google Places: ' + status);
-        return;
-      }
-
-      const rating = typeof place.rating === 'number' ? place.rating.toFixed(1) : '-';
-      const total = place.user_ratings_total || 0;
-
-      ratingEl.textContent = `${rating} / 5`;
-      ratingCountEl.textContent = total > 0 ? `(${total} omdomen)` : '';
-      renderReviews(place.reviews || []);
-
-      if (place.url) {
-        reviewsLinkEl.href = place.url;
-        reviewsLinkEl.classList.remove('hidden');
-      }
-
-      setStatus('');
-    }
-
-    function getDetailsByPlaceId(service, placeId) {
-      service.getDetails({
-        placeId,
-        fields: ['name', 'rating', 'user_ratings_total', 'reviews', 'url']
-      }, handlePlaceDetails);
-    }
-
-    window.initGoogleReviews = function initGoogleReviews() {
-      if (!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY.startsWith('REPLACE_')) {
-        renderFallbackReviews('Google Reviews ar inte aktiverat. Visar manuellt valda 5-stjarniga recensioner.');
-        return;
-      }
-
-      if (!window.google || !window.google.maps || !window.google.maps.places) {
-        renderFallbackReviews('Kunde inte ladda Google Maps Places API. Visar manuellt valda 5-stjarniga recensioner.');
-        return;
-      }
-
-      const service = new google.maps.places.PlacesService(document.createElement('div'));
-
-      if (GOOGLE_PLACE_ID && GOOGLE_PLACE_ID.startsWith('ChIJ')) {
-        getDetailsByPlaceId(service, GOOGLE_PLACE_ID);
-        return;
-      }
-
-      service.findPlaceFromQuery({
-        query: GOOGLE_PLACE_QUERY,
-        fields: ['place_id', 'name']
-      }, (results, status) => {
-        if (status !== google.maps.places.PlacesServiceStatus.OK || !results || !results.length || !results[0].place_id) {
-          renderFallbackReviews('Kunde inte hitta restaurangen via sokning. Visar manuellt valda 5-stjarniga recensioner. Status: ' + status);
-          return;
-        }
-
-        getDetailsByPlaceId(service, results[0].place_id);
-      });
-    };
-
-    (function loadGoogleMapsScript() {
-      let googleReviewsInitialized = false;
-
-      const originalInitGoogleReviews = window.initGoogleReviews;
-      window.initGoogleReviews = function wrappedInitGoogleReviews() {
-        googleReviewsInitialized = true;
-        originalInitGoogleReviews();
-      };
-
-      if (!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY.startsWith('REPLACE_')) {
-        window.initGoogleReviews();
-        return;
-      }
-
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&language=sv&region=SE&callback=initGoogleReviews`;
-      script.async = true;
-      script.defer = true;
-      script.onerror = () => {
-        renderFallbackReviews('Misslyckades att ladda Google scriptet. Visar manuellt valda 5-stjarniga recensioner.');
-      };
-      document.body.appendChild(script);
-
-      window.setTimeout(() => {
-        if (!googleReviewsInitialized) {
-          renderFallbackReviews('Google svarade inte lokalt. Kontrollera att localhost ar tillaten i API-nyckelns website restrictions. Visar manuellt valda 5-stjarniga recensioner.');
-        }
-      }, 4000);
-    })();
 
     yearEl.textContent = new Date().getFullYear();
   </script>
