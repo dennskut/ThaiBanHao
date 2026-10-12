@@ -76,13 +76,13 @@ window.TBH_CONFIG = {
   // Date format: YYYY-MM-DD (inclusive). Leave start/end empty to always show when enabled=true.
   NOTICE: {
     enabled: true,
-    startDate: "2026-08-03",
-    endDate: "2026-08-08",
-    eyebrow: "Tillfällig information",
-    title: "Endast takeaway lördag 8/8",
-    message: "Lördag 8/8 har vi endast takeaway då restaurangen är bokad för privat tillställning.",
-    stickyText: "Lördag 8/8: Endast takeaway. Restaurangen är bokad för privat tillställning.",
-    ctaLabel: "Beställ takeaway",
-    ctaHref: "#takeaway"
+    startDate: "",
+    endDate: "",
+    eyebrow: "Premiär fredag 16 oktober",
+    title: "Snart kommer sushi till Thai Ban Hao!",
+    message: "Vi finslipar menyn just nu. Sushi-premiär fredag 16 oktober, mer information kommer snart.",
+    stickyText: "SUSHI-PREMIÄR FREDAG 16 OKTOBER",
+    ctaLabel: "",
+    ctaHref: "#menu"
   }
 };
