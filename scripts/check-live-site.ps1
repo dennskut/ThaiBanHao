@@ -63,7 +63,7 @@ if ($failed.Count -gt 0) {
 
 # Optional header check on homepage
 try {
-  $home = Invoke-WebRequest -Uri "$base/" -Method Get -UseBasicParsing -MaximumRedirection 5
+  $homeResponse = Invoke-WebRequest -Uri "$base/" -Method Get -UseBasicParsing -MaximumRedirection 5
   $headersToInspect = @(
     'Content-Security-Policy',
     'X-Content-Type-Options',
@@ -72,12 +72,12 @@ try {
 
   Write-Host "\nHeader snapshot:" -ForegroundColor Cyan
   foreach ($h in $headersToInspect) {
-    $val = $home.Headers[$h]
+    $val = $homeResponse.Headers[$h]
     if ($val) {
-      Write-Host "$h: $val"
+      Write-Host ('{0}: {1}' -f $h, $val)
     }
     else {
-      Write-Host "$h: (missing)"
+      Write-Host ('{0}: (missing)' -f $h)
     }
   }
 }
