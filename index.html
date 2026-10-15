@@ -6,7 +6,7 @@
   <title>Thai Ban Hao | Autentisk Thairestaurang i Visby</title>
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
   <link rel="apple-touch-icon" href="assets/images/logo.png" />
-  <meta name="description" content="Thai Ban Hao i Visby. Ät här, beställ avhämtning och njut av autentiska thaismaker i en varm miljö." />
+  <meta name="description" content="Thai Ban Hao i Visby. Autentiska thairätter och sushi med maki, nigiri och uramaki. Ät här eller beställ för avhämtning." />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -47,6 +47,10 @@
 
     html {
       scroll-behavior: smooth;
+    }
+
+    #sushi {
+      scroll-margin-top: 10rem;
     }
 
     body {
@@ -94,7 +98,8 @@
       <button id="menu-toggle" class="md:hidden rounded-lg border border-white/20 px-3 py-2 text-sm" aria-label="Öppna meny">Meny</button>
 
       <nav id="desktop-nav" class="hidden items-center gap-7 text-sm md:flex">
-        <a class="text-textSoft transition hover:text-accent" href="#menu">Meny</a>
+        <a class="text-textSoft transition hover:text-accent" href="#menu">Thai</a>
+        <a class="text-textSoft transition hover:text-accent" href="#sushi">Sushi</a>
         <a class="text-textSoft transition hover:text-accent" href="#takeaway">Avhämtning</a>
         <a class="text-textSoft transition hover:text-accent" href="#location">Kontakt</a>
       </nav>
@@ -104,8 +109,8 @@
 
     <nav id="mobile-nav" class="hidden border-t border-white/10 bg-black/95 px-4 py-4 md:hidden">
       <div class="flex flex-col gap-3 text-sm">
-        <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#menu">Meny</a>
-
+        <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#menu">Thai</a>
+        <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#sushi">Sushi</a>
         <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#takeaway">Avhämtning</a>
         <a class="rounded-lg px-2 py-2 text-textSoft transition hover:bg-white/5 hover:text-accent" href="#location">Kontakt</a>
       </div>
@@ -134,6 +139,7 @@
           <p class="mt-5 max-w-2xl text-base text-textSoft sm:text-lg">Färska råvaror, tydliga smaker och ett varmt thailändskt välkomnande. Perfekt för mysiga middagar, familjekvällar och takeaway.</p>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
             <a href="#takeaway" class="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/30 px-7 py-3 text-sm font-semibold text-textSoft transition hover:border-accent hover:text-accent">Beställ takeaway</a>
+            <a href="#sushi" class="inline-flex items-center justify-center rounded-full border border-accent/60 bg-black/30 px-7 py-3 text-sm font-semibold text-accent transition hover:bg-accent hover:text-black">Se vår sushimeny</a>
           </div>
         </div>
       </div>
@@ -354,15 +360,89 @@
         </article>
       </div>
 
-      <div id="sushi" class="mt-10 thai-border rounded-2xl bg-panel/80 p-6 sm:p-8" role="status" aria-live="polite">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-[0.2em] text-accent">Sushi | Premiär fredag 16 oktober</p>
-            <h3 class="mt-2 font-heading text-2xl sm:text-3xl">Sushi kommer snart</h3>
-            <p class="mt-2 max-w-2xl text-sm text-textSoft">Vi arbetar fortfarande med sushimenyn. Rätter och priser publiceras här så snart menyn är klar.</p>
-          </div>
-          <span class="inline-flex w-fit rounded-full border border-accent/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-accent">Under uppbyggnad</span>
+    </section>
+
+    <section id="sushi" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8" aria-labelledby="sushi-heading">
+      <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-accent">Sushi | Premiär fredag 16 oktober</p>
+          <h2 id="sushi-heading" class="mt-2 font-heading text-3xl sm:text-4xl">Sushi på Thai Ban Hao</h2>
+          <p class="mt-4 max-w-2xl text-sm text-textSoft sm:text-base">Från krispig tempura till lax nigiri och maki. Hitta din favorit eller välj en mix av flera smaker.</p>
         </div>
+        <a href="#takeaway" class="inline-flex shrink-0 items-center justify-center rounded-full border border-accent/60 px-5 py-2 text-sm font-semibold text-accent transition hover:bg-accent hover:text-black">Beställ för avhämtning</a>
+      </div>
+
+      <div class="mb-10 grid gap-4 sm:grid-cols-3">
+        <figure class="thai-border overflow-hidden rounded-2xl bg-panel/70">
+          <img src="assets/images/menu/sushi-tempura.jpeg" alt="Uramaki med tempuraräkor, sesamfrön och chilimajonnäs på ett fat" width="1200" height="900" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+          <figcaption class="p-4"><h3 class="font-semibold">Spicy Tempura Uramaki</h3><p class="mt-1 text-sm text-accent">8 st · 159 kr</p></figcaption>
+        </figure>
+        <figure class="thai-border overflow-hidden rounded-2xl bg-panel/70">
+          <img src="assets/images/menu/sushi-nigiri.jpeg" alt="Nigiri med vit fisk, lax, ål och räkor på ett svart fat" width="1200" height="654" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+          <figcaption class="p-4"><h3 class="font-semibold">Thai Ban Hao Nigiri Combo</h3><p class="mt-1 text-sm text-accent">8 st · 159 kr</p></figcaption>
+        </figure>
+        <figure class="thai-border overflow-hidden rounded-2xl bg-panel/70">
+          <img src="assets/images/menu/sushi-maki.jpeg" alt="Lax maki med avokado, gurka och morot på ett fat" width="1200" height="900" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+          <figcaption class="p-4"><h3 class="font-semibold">Lax Maki</h3><p class="mt-1 text-sm text-accent">10 st · 139 kr</p></figcaption>
+        </figure>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="thai-border rounded-2xl bg-panel/80 p-6">
+          <h3 class="font-heading text-2xl">Maki, uramaki &amp; nigiri</h3>
+          <dl class="mt-5 space-y-5">
+            <div>
+              <dt class="font-semibold">Spicy Tempura Uramaki <span class="whitespace-nowrap text-sm font-normal text-textSoft">8 st</span></dt>
+              <dd class="mt-1 text-sm text-textSoft">Friterade räkor, avokado, gurka, morot, chilimajonnäs och sesamfrön.</dd>
+              <dd class="mt-2 font-semibold text-accent">159 kr</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Lax Nigiri <span class="whitespace-nowrap text-sm font-normal text-textSoft">8 st</span></dt>
+              <dd class="mt-2 font-semibold text-accent">149 kr</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Lax Maki <span class="whitespace-nowrap text-sm font-normal text-textSoft">10 st</span></dt>
+              <dd class="mt-1 text-sm text-textSoft">Lax, avokado, gurka och morot.</dd>
+              <dd class="mt-2 font-semibold text-accent">139 kr</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Lax Uramaki <span class="whitespace-nowrap text-sm font-normal text-textSoft">10 st</span></dt>
+              <dd class="mt-1 text-sm text-textSoft">Lax, avokado, gurka, morot, sesamfrön och löjrom.</dd>
+              <dd class="mt-2 font-semibold text-accent">139 kr</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">California Maki <span class="whitespace-nowrap text-sm font-normal text-textSoft">10 st</span></dt>
+              <dd class="mt-1 text-sm text-textSoft">Avokado, gurka, morot, sesamfrön och japansk majonnäs.</dd>
+              <dd class="mt-2 font-semibold text-accent">139 kr</dd>
+            </div>
+          </dl>
+        </article>
+        <article class="thai-border rounded-2xl bg-panel/80 p-6">
+          <h3 class="font-heading text-2xl">Thai Ban Hao Combo &amp; Mix</h3>
+          <p class="mt-3 text-sm text-textSoft">Till nigiri väljer du mellan lax, tofu, omelett, ål, tilapia, räkor eller avokado.</p>
+          <dl class="mt-5 space-y-5">
+            <div>
+              <dt class="font-semibold">Thai Ban Hao Nigiri Combo <span class="whitespace-nowrap text-sm font-normal text-textSoft">8 st</span></dt>
+              <dd class="mt-1 text-sm text-textSoft">8 nigiri med dina val från alternativen ovan.</dd>
+              <dd class="mt-2 font-semibold text-accent">159 kr</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Thai Ban Hao Mini Mix <span class="whitespace-nowrap text-sm font-normal text-textSoft">8 bitar</span></dt>
+              <dd class="mt-1 text-sm text-textSoft">4 maki med lax eller California och 4 valfria nigiri.</dd>
+              <dd class="mt-2 font-semibold text-accent">139 kr</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Thai Ban Hao Medium Mix <span class="whitespace-nowrap text-sm font-normal text-textSoft">11 bitar</span></dt>
+              <dd class="mt-1 text-sm text-textSoft">5 maki med lax eller California och 6 valfria nigiri.</dd>
+              <dd class="mt-2 font-semibold text-accent">159 kr</dd>
+            </div>
+            <div>
+              <dt class="font-semibold">Thai Ban Hao Big Mix <span class="whitespace-nowrap text-sm font-normal text-textSoft">13 bitar</span></dt>
+              <dd class="mt-1 text-sm text-textSoft">5 maki med lax eller California och 8 valfria nigiri.</dd>
+              <dd class="mt-2 font-semibold text-accent">179 kr</dd>
+            </div>
+          </dl>
+        </article>
       </div>
     </section>
 
@@ -379,7 +459,7 @@
     <section id="takeaway" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
       <div class="thai-border rounded-3xl bg-gradient-to-r from-[#19130f] to-[#0f0f0f] p-8 sm:p-10">
         <p class="text-xs uppercase tracking-[0.2em] text-accent">Avhämtning</p>
-        <h2 class="mt-2 font-heading text-3xl sm:text-4xl">Nylagad wok, redo för avhämtning</h2>
+        <h2 class="mt-2 font-heading text-3xl sm:text-4xl">Thaimat &amp; sushi för avhämtning</h2>
         <p class="mt-4 max-w-2xl text-textSoft">Har du bråttom? Ring oss så lagar vi din beställning färsk för avhämtning. Perfekt efter strandpromenaden, stadsturen eller en sen arbetskväll.</p>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
           <a href="tel:0736189005" class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-extrabold text-black transition hover:brightness-110">Ring och beställ: 073-618 90 05</a>

@@ -79,10 +79,10 @@ window.TBH_CONFIG = {
     startDate: "",
     endDate: "",
     eyebrow: "Premiär fredag 16 oktober",
-    title: "Snart kommer sushi till Thai Ban Hao!",
-    message: "Vi finslipar menyn just nu. Sushi-premiär fredag 16 oktober, mer information kommer snart.",
+    title: "Sushi på Thai Ban Hao – se vår nya meny!",
+    message: "Premiär fredag 16 oktober. Upptäck maki, nigiri, krispig tempura och våra sushimixar. Hela menyn med priser finns här på sidan.",
     stickyText: "SUSHI-PREMIÄR FREDAG 16 OKTOBER",
-    ctaLabel: "",
-    ctaHref: "#menu"
+    ctaLabel: "Se sushimenyn",
+    ctaHref: "#sushi"
   }
 };
