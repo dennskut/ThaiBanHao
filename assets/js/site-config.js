@@ -77,12 +77,14 @@ window.TBH_CONFIG = {
   NOTICE: {
     enabled: true,
     startDate: "",
-    endDate: "",
-    eyebrow: "Premiär fredag 16 oktober",
-    title: "Sushi på Thai Ban Hao – se vår nya meny!",
-    message: "Premiär fredag 16 oktober. Upptäck maki, nigiri, krispig tempura och våra sushimixar. Hela menyn med priser finns här på sidan.",
-    stickyText: "SUSHI-PREMIÄR FREDAG 16 OKTOBER",
-    ctaLabel: "Se sushimenyn",
-    ctaHref: "#sushi"
+    endDate: "2026-11-03",
+    eyebrow: "🎉 Vi fyller 1 år! · Tisdag 3 november",
+    title: "Kalas! 20 % rabatt på hela menyn – hela dagen lång 🥳",
+    message: "Ett helt år av curry, wok och glada gäster i Visby – tack för att ni ätit med oss! Tisdag 3 november bjuder vi på 20 % rabatt på allt, thai som sushi. Kom och fira med oss!",
+    stickyText: "🎉 VI FYLLER 1 ÅR! TISDAG 3/11: 20 % RABATT PÅ HELA MENYN HELA DAGEN 🥳",
+    ctaLabel: "Välj din kalasrätt →",
+    ctaHref: "#menu",
+    // Optional: shows a rotated sticker with confetti on the hero notice. Leave empty for the plain card.
+    badge: "−20 %"
   }
 };

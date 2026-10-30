@@ -79,6 +79,95 @@
       pointer-events: none;
     }
 
+    #hero-notice-card.notice-party {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(244, 162, 97, 0.9) 0 3px, transparent 4px),
+        radial-gradient(circle at 22% 88%, rgba(231, 111, 81, 0.85) 0 3px, transparent 4px),
+        radial-gradient(circle at 46% 10%, rgba(233, 196, 106, 0.9) 0 2px, transparent 3px),
+        radial-gradient(circle at 64% 92%, rgba(42, 157, 143, 0.85) 0 3px, transparent 4px),
+        radial-gradient(circle at 74% 14%, rgba(231, 111, 81, 0.85) 0 2px, transparent 3px),
+        radial-gradient(circle at 94% 82%, rgba(233, 196, 106, 0.9) 0 3px, transparent 4px),
+        rgba(0, 0, 0, 0.72);
+      max-width: 56rem;
+      padding: 1.5rem 6.5rem 1.5rem 1.5rem;
+    }
+
+    #hero-notice-card.notice-party #hero-notice-eyebrow {
+      font-size: 0.85rem;
+    }
+
+    #hero-notice-card.notice-party #hero-notice-title {
+      margin-top: 0.75rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    #hero-notice-card.notice-party #hero-notice-message {
+      margin-top: 0.75rem;
+      font-size: 1rem;
+    }
+
+    #hero-notice-card.notice-party #hero-notice-cta {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.85rem;
+    }
+
+    .notice-badge {
+      position: absolute;
+      top: -1.25rem;
+      right: -0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 5.75rem;
+      height: 5.75rem;
+      border-radius: 9999px;
+      background: var(--accent);
+      color: #000;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.6), 0 12px 30px rgba(244, 162, 97, 0.45);
+      transform: rotate(12deg);
+      animation: notice-wiggle 2.6s ease-in-out infinite;
+    }
+
+    @media (min-width: 640px) {
+      #hero-notice-card.notice-party {
+        padding: 2.25rem 11rem 2.25rem 2.25rem;
+      }
+
+      #hero-notice-card.notice-party #hero-notice-title {
+        font-size: 2.5rem;
+      }
+
+      #hero-notice-card.notice-party #hero-notice-message {
+        font-size: 1.125rem;
+      }
+
+      .notice-badge {
+        top: -1.75rem;
+        right: -1rem;
+        width: 9rem;
+        height: 9rem;
+        font-size: 2.25rem;
+      }
+    }
+
+    @keyframes notice-wiggle {
+      0%, 100% { transform: rotate(12deg) scale(1); }
+      50% { transform: rotate(-6deg) scale(1.08); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .notice-badge {
+        animation: none;
+      }
+    }
+
     .hero-overlay {
       background:
         linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.82)),
@@ -128,7 +217,8 @@
     <section class="hero-overlay relative flex min-h-[95vh] items-center px-4 pt-28 sm:px-6 lg:px-8">
       <div class="mx-auto grid w-full max-w-7xl gap-8 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-12">
-          <div id="hero-notice-card" class="mb-6 hidden max-w-3xl rounded-2xl border border-accent/60 bg-black/65 p-4 shadow-glow backdrop-blur-sm sm:p-5" role="status" aria-live="polite">
+          <div id="hero-notice-card" class="relative mb-6 hidden max-w-3xl rounded-2xl border border-accent/60 bg-black/65 p-4 shadow-glow backdrop-blur-sm sm:p-5" role="status" aria-live="polite">
+            <span id="hero-notice-badge" class="notice-badge hidden" aria-hidden="true"></span>
             <p id="hero-notice-eyebrow" class="text-xs font-semibold uppercase tracking-[0.2em] text-accent"></p>
             <p id="hero-notice-title" class="mt-2 text-sm font-medium text-textMain sm:text-base"></p>
             <p id="hero-notice-message" class="mt-1 text-sm text-textSoft"></p>
@@ -365,7 +455,7 @@
     <section id="sushi" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8" aria-labelledby="sushi-heading">
       <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-accent">Sushi | Premiär fredag 16 oktober</p>
+          <p class="text-xs uppercase tracking-[0.2em] text-accent">Sushi</p>
           <h2 id="sushi-heading" class="mt-2 font-heading text-3xl sm:text-4xl">Sushi på Thai Ban Hao</h2>
           <p class="mt-4 max-w-2xl text-sm text-textSoft sm:text-base">Från krispig tempura till lax nigiri och maki. Hitta din favorit eller välj en mix av flera smaker.</p>
         </div>
@@ -607,6 +697,7 @@
     const heroNoticeTitleEl = document.getElementById('hero-notice-title');
     const heroNoticeMessageEl = document.getElementById('hero-notice-message');
     const heroNoticeCtaEl = document.getElementById('hero-notice-cta');
+    const heroNoticeBadgeEl = document.getElementById('hero-notice-badge');
     const yearEl = document.getElementById('year');
     const reviewsListEl = document.getElementById('google-reviews-list');
     const openingHoursListEl = document.getElementById('opening-hours-list');
@@ -706,6 +797,13 @@
       heroNoticeTitleEl.textContent = title;
       heroNoticeMessageEl.textContent = message;
       heroNoticeCardEl.classList.remove('hidden');
+
+      const badge = typeof noticeConfig.badge === 'string' ? noticeConfig.badge.trim() : '';
+      if (badge) {
+        heroNoticeBadgeEl.textContent = badge;
+        heroNoticeBadgeEl.classList.remove('hidden');
+        heroNoticeCardEl.classList.add('notice-party');
+      }
 
       if (ctaLabel) {
         heroNoticeCtaEl.textContent = ctaLabel;
